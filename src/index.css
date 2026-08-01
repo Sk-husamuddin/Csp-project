@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', 'Nirmala UI', 'Arial Unicode MS', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', 'Newsreader', 'Noto Sans Telugu', 'Nirmala UI', Georgia, serif;
+  }
+}
+
+.font-telugu {
+  font-family: 'Noto Sans Telugu', 'Nirmala UI', 'Arial Unicode MS', sans-serif;
+  line-height: 1.7;
+}
+
+.telugu-card-title {
+  font-family: 'Noto Sans Telugu', 'Nirmala UI', 'Arial Unicode MS', sans-serif;
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.telugu-body {
+  font-family: 'Noto Sans Telugu', 'Nirmala UI', 'Arial Unicode MS', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}

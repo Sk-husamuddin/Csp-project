@@ -1,0 +1,6 @@
+{
+  "name": "CowCare AI",
+  "description": "AI-powered Community Service Platform for Cow & Buffalo Health Assistance, Symptom Checker, Disease Library, First Aid, Vaccination Schedule, and Emergency Assistance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
