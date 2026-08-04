@@ -1,8 +1,8 @@
 import initSqlJs, { Database as SqlJsDatabase } from 'sql.js';
 import fs from 'fs';
 import path from 'path';
-import { INITIAL_DISEASES, INITIAL_HEALTH_TIPS, INITIAL_VACCINATIONS, INITIAL_FAQS } from '../data/seedData';
-import { Disease, HealthTip, VaccineItem, FAQItem, FeedbackItem, AnalysisResult, AdminStats } from '../types';
+import { INITIAL_DISEASES, INITIAL_HEALTH_TIPS, INITIAL_VACCINATIONS, INITIAL_FAQS } from '../data/seedData.js';
+import { Disease, HealthTip, VaccineItem, FAQItem, FeedbackItem, AnalysisResult, AdminStats } from '../types.js';
 
 const getDbFilePath = () => {
   if (process.env.VERCEL || process.env.NODE_ENV === 'production') {

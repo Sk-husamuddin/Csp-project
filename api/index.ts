@@ -1,10 +1,3 @@
-import { createExpressApp } from '../server';
+import app from '../src/app.js';
 
-let appInstance: any = null;
-
-export default async function handler(req: any, res: any) {
-  if (!appInstance) {
-    appInstance = await createExpressApp();
-  }
-  return appInstance(req, res);
-}
+export default app;

@@ -1,4 +1,4 @@
-import { AnalysisInput, AnalysisResult } from '../types';
+import { AnalysisInput, AnalysisResult } from '../types.js';
 
 export function analyzeSymptomsFallback(input: AnalysisInput): AnalysisResult {
   const { animalType, symptoms, additionalNotes, language } = input;
