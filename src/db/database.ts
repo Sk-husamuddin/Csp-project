@@ -17,9 +17,13 @@ let memoryAnalysisHistory: any[] = [];
 
 export async function getDb(): Promise<SqlJsDatabase | null> {
   if (db) return db;
+  if (process.env.VERCEL) {
+    return null;
+  }
 
   try {
-    const SQL = await initSqlJs();
+    const SQL = await initSqlJs().catch(() => null);
+    if (!SQL) return null;
     const DB_FILE = getDbFilePath();
 
     if (fs.existsSync(DB_FILE)) {
