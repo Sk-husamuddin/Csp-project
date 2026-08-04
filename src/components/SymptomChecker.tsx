@@ -17,6 +17,7 @@ import {
 import { SYMPTOMS_LIST } from '../data/seedData';
 import { AnalysisInput, AnalysisResult, EmergencyLevel } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { analyzeSymptomsFallback } from '../utils/expertRuleEngine';
 
 interface SymptomCheckerProps {
   setActiveTab: (tab: string) => void;
@@ -80,16 +81,28 @@ export const SymptomChecker: React.FC<SymptomCheckerProps> = ({ setActiveTab, sh
         body: JSON.stringify(payload)
       });
 
+      if (!res.ok) {
+        // Fall back to client-side rule engine if API returns non-200 (e.g. 404 on static Vercel)
+        const fallbackResult = analyzeSymptomsFallback(payload as any);
+        setResult(fallbackResult);
+        showToast('Symptom analysis generated (Rule Engine).', 'success');
+        return;
+      }
+
       const json = await res.json();
       if (json.success && json.data) {
         setResult(json.data);
         showToast('Symptom analysis completed.', 'success');
       } else {
-        throw new Error(json.error || 'Failed to generate analysis.');
+        const fallbackResult = analyzeSymptomsFallback(payload as any);
+        setResult(fallbackResult);
+        showToast('Symptom analysis generated (Rule Engine).', 'success');
       }
     } catch (err: any) {
-      console.error('Analysis error:', err);
-      showToast(err.message || 'An error occurred during AI analysis.', 'error');
+      console.warn('Backend API analysis unavailable, running local expert rule engine:', err);
+      const fallbackResult = analyzeSymptomsFallback(payload as any);
+      setResult(fallbackResult);
+      showToast('Symptom analysis generated (Rule Engine).', 'success');
     } finally {
       setLoading(false);
     }

@@ -36,14 +36,14 @@ export function App() {
     }, 4000);
   };
 
-  // Fetch initial data from Express backend SQLite database
+  // Fetch initial data from Express backend SQLite database (with automatic seed fallback)
   const loadData = async () => {
     try {
       const [resDis, resTips, resVac, resFaq] = await Promise.all([
-        fetch('/api/diseases').then(r => r.json()).catch(() => null),
-        fetch('/api/tips').then(r => r.json()).catch(() => null),
-        fetch('/api/vaccinations').then(r => r.json()).catch(() => null),
-        fetch('/api/faqs').then(r => r.json()).catch(() => null)
+        fetch('/api/diseases').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/api/health-tips').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/api/vaccinations').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/api/faqs').then(r => r.ok ? r.json() : null).catch(() => null)
       ]);
 
       if (resDis && Array.isArray(resDis) && resDis.length > 0) setDiseases(resDis);
@@ -51,7 +51,7 @@ export function App() {
       if (resVac && Array.isArray(resVac) && resVac.length > 0) setVaccinations(resVac);
       if (resFaq && Array.isArray(resFaq) && resFaq.length > 0) setFaqs(resFaq);
     } catch (err) {
-      console.warn('Backend API connection using seed fallbacks:', err);
+      console.info('Backend API offline, using rich seed fallbacks.');
     }
   };
 

@@ -25,7 +25,7 @@ dotenv.config();
 
 const PORT = 3000;
 
-async function startServer() {
+export async function createExpressApp() {
   const app = express();
   app.use(express.json());
 
@@ -196,7 +196,7 @@ Return JSON strictly matching this schema:
   });
 
   // Health Tips CRUD
-  app.get('/api/health-tips', async (req, res) => {
+  app.get(['/api/health-tips', '/api/tips'], async (req, res) => {
     try {
       const tips = await getAllHealthTips();
       res.json(tips);
@@ -244,6 +244,12 @@ Return JSON strictly matching this schema:
     }
   });
 
+  return app;
+}
+
+async function startServer() {
+  const app = await createExpressApp();
+
   // --- VITE MIDDLEWARE / PRODUCTION STATIC SERVING ---
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
@@ -264,6 +270,8 @@ Return JSON strictly matching this schema:
   });
 }
 
-startServer().catch(err => {
-  console.error('Failed to start CowCare AI server:', err);
-});
+if (process.env.VERCEL !== '1') {
+  startServer().catch(err => {
+    console.error('Failed to start CowCare AI server:', err);
+  });
+}
